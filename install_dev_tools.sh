@@ -1,46 +1,47 @@
 #!/bin/bash
 
-# Перевірка на права суперкористувача (root)
-if [ "$EUID" -ne 0 ]; then
-  echo "Будь ласка, запустіть скрипт з правами sudo."
-  exit 1
-fi
+set -euo pipefail
 
-echo "Починаємо встановлення інструментів..."
-
-# 1. Встановлення Docker
 if ! command -v docker &> /dev/null; then
-    echo "Встановлення Docker..."
-    apt-get update
-    apt-get install -y docker.io
-    systemctl start docker
-    systemctl enable docker
+    sudo apt-get update
+    sudo apt-get install -y ca-certificates curl gnupg
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    sudo apt-get update
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
 else
     echo "Docker вже встановлено."
 fi
 
-# 2. Встановлення Docker Compose
-if ! command -v docker-compose &> /dev/null; then
-    echo "Встановлення Docker Compose..."
-    apt-get install -y docker-compose
+if ! docker compose version &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y docker-compose-plugin
 else
-    echo "Docker Compose вже встановлено."
+    echo "Docker Compose V2 вже встановлено."
 fi
 
-# 3. Встановлення Python 3 та pip
-if ! command -v python3 &> /dev/null; then
-    echo "Встановлення Python 3..."
-    apt-get install -y python3 python3-pip
-else
-    echo "Python 3 вже встановлено."
+PYTHON_VALID=0
+if command -v python3 &> /dev/null; then
+    PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+    REQUIRED_VERSION="3.9"
+    if [ "$(echo -e "$PYTHON_VERSION\n$REQUIRED_VERSION" | sort -V | head -n1)" = "$REQUIRED_VERSION" ]; then
+        PYTHON_VALID=1
+    fi
 fi
 
-# 4. Встановлення Django
+if [ "$PYTHON_VALID" -eq 0 ]; then
+    sudo apt-get update
+    sudo apt-get install -y python3 python3-pip
+else
+    echo "Python 3 (>= 3.9) вже встановлено."
+fi
+
 if ! python3 -m django --version &> /dev/null; then
-    echo "Встановлення Django..."
     pip3 install django --break-system-packages
 else
     echo "Django вже встановлено."
 fi
-
-echo "Всі інструменти успішно перевірені або встановлені!"
