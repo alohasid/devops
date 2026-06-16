@@ -1,12 +1,13 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-mock-key-for-dev-purposes-only'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-dev-key')
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -50,11 +51,11 @@ WSGI_APPLICATION = 'homework4.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbname',
-        'USER': 'user',
-        'PASSWORD': 'password',
-        'HOST': 'db',
-        'PORT': '5432',
+        'NAME': os.environ.get('POSTGRES_DB', 'devops_db'),
+        'USER': os.environ.get('POSTGRES_USER', 'devops_user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'devops_secure_password'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'db'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 
