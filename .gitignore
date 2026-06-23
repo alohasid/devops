@@ -1,0 +1,9 @@
+.idea
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*.log
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
