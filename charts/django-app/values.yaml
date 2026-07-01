@@ -1,0 +1,27 @@
+replicaCount: 2
+
+image:
+  repository: oleksii-sydorenko.dkr.ecr.us-west-2.amazonaws.com/lesson-5-ecr
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8000
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+
+configMap:
+  DEBUG: "True"
+  SECRET_KEY: "django-insecure-dev-key-k8s"
+  ALLOWED_HOSTS: "localhost,127.0.0.1"
+  POSTGRES_DB: "devops_db"
+  POSTGRES_USER: "devops_user"
+  POSTGRES_PASSWORD: "devops_secure_password"
+  POSTGRES_HOST: "db-service"
+  POSTGRES_PORT: "5432"

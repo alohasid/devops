@@ -11,7 +11,6 @@ terraform {
 provider "aws" {
   region = "us-west-2"
 }
-
 module "s3_backend" {
   source      = "./modules/s3-backend"
   bucket_name = "sydorenko-oleksii-terraform-bucket"
@@ -31,4 +30,10 @@ module "ecr" {
   source       = "./modules/ecr"
   ecr_name     = "lesson-5-ecr"
   scan_on_push = true
+}
+
+module "eks" {
+  source       = "./modules/eks"
+  cluster_name = "lesson-7-eks-cluster"
+  subnet_ids   = module.vpc.private_subnet_ids
 }
