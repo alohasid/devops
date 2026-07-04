@@ -37,7 +37,7 @@ spec:
         ECR_REGISTRY   = '079715688900.dkr.ecr.us-west-2.amazonaws.com'
         ECR_REPOSITORY = 'lesson-5-ecr'
         IMAGE_TAG      = "${BUILD_NUMBER}"
-        GIT_REPO_URL   = 'github.com/your-username/your-repo-name.git'
+        GIT_REPO_URL   = 'https://github.com/alohasid/devops.git'
     }
 
     stages {
