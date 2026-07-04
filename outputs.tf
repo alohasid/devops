@@ -37,3 +37,11 @@ output "eks_cluster_name" {
   description = "The name of the Kubernetes cluster"
   value       = module.eks.cluster_name
 }
+
+output "jenkins_url" {
+  value = "Check Kubernetes Services for Jenkins LoadBalancer External IP"
+}
+
+output "argocd_url" {
+  value = "Check Kubernetes Services for ArgoCD Server LoadBalancer External IP"
+}
