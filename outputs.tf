@@ -45,3 +45,8 @@ output "jenkins_url" {
 output "argocd_url" {
   value = "Check Kubernetes Services for ArgoCD Server LoadBalancer External IP"
 }
+
+output "database_endpoint" {
+  value       = module.rds.endpoint
+  description = "The connection endpoint for the created RDS instance or Aurora Cluster"
+}

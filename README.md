@@ -27,3 +27,37 @@ aws eks update-kubeconfig --region us-west-2 --name lesson-7-eks-cluster
 ### Step 4: Component Application Deployment
 Package and install application templates to operational runtimes using Helm commands:
 helm install django-release ./charts/django-app
+
+# Flexible Terraform Database Module (RDS & Aurora)
+
+This repository contains a highly reusable, production-ready Terraform module designed to dynamically provision either a standard **Amazon RDS instance** or an **AWS Aurora Cluster** based on your configuration.
+
+---
+
+## 🚀 Architectural Capabilities
+
+*   **Conditional Deployment:** Seamlessly toggle between architectures using the `use_aurora` boolean flag.
+*   **Unified Networking:** Automatically provisions a shared `aws_db_subnet_group` across isolated private infrastructure subnets.
+*   **Isolated Security Management:** Implements strict security group rules, restricting ingress boundaries to internal VPC network segments (Port `5432` for PostgreSQL, `3306` for MySQL).
+*   **Custom Optimization:** Separates standard DB parameter groups from cluster configuration groups to handle fine-grained engine-specific connection presets.
+
+---
+
+## 💻 Module Usage Example
+
+```hcl
+module "rds" {
+  source            = "./modules/rds"
+  cluster_name      = "production-db"
+  vpc_id            = module.vpc.vpc_id
+  subnet_ids        = module.vpc.private_subnet_ids
+  use_aurora        = true
+  engine            = "aurora-postgresql"
+  engine_version    = "15.4"
+  instance_class    = "db.t3.medium"
+  allocated_storage = 20
+  db_name           = "app_prod_db"
+  username          = "master_admin"
+  password          = var.db_password # Best practice: Avoid hardcoding secrets!
+  multi_az          = true
+}

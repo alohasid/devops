@@ -37,3 +37,19 @@ module "eks" {
   cluster_name = "lesson-7-eks-cluster"
   subnet_ids   = module.vpc.private_subnet_ids
 }
+
+module "rds" {
+  source            = "./modules/rds"
+  cluster_name      = "lesson-db-module"
+  vpc_id            = module.vpc.vpc_id
+  subnet_ids        = module.vpc.private_subnet_ids
+  use_aurora        = false
+  engine            = "postgres"
+  engine_version    = "15.4"
+  instance_class    = "db.t3.medium"
+  allocated_storage = 20
+  db_name           = "devops_db"
+  username          = "devops_user"
+  password          = "SuperSecurePassword2026"
+  multi_az          = false
+}
