@@ -1,9 +1,9 @@
-# terraform {
-#   backend "s3" {
-#     bucket         = "sydorenko-oleksii-terraform-bucket"
-#     key            = "lesson-5/terraform.tfstate"
-#     region         = "us-west-2"
-#     dynamodb_table = "terraform-locks"
-#     encrypt        = true
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket         = "sydorenko-oleksii-terraform-bucket"
+    key            = "lesson-7/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}

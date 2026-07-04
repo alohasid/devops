@@ -23,6 +23,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-config
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
           resources:
             limits:
               cpu: 500m
