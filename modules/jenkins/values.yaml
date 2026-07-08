@@ -1,13 +1,27 @@
 controller:
   componentName: "jenkins-controller"
-  adminUser: "admin"
-  adminPassword: "AdminSecurePassword2026"
+  adminSecretKey: "jenkins-admin-password"
   serviceType: "LoadBalancer"
   installPlugins:
     - "kubernetes:4251.v130c197fa_043"
     - "workflow-aggregator:596.v8c21c963d92d"
     - "git:5.2.1"
     - "pipeline-stage-view:2.34"
+    - "configuration-as-code:1775.v810d70a_730cf"
+
+  JCasC:
+    enabled: true
+    configScripts:
+      welcome-message: |
+        jenkins:
+          systemMessage: "Automated Jenkins Cluster Management via GitOps"
+      clouds-configuration: |
+        jenkins:
+          clouds:
+            - kubernetes:
+                name: "kubernetes"
+                serverUrl: "https://kubernetes.default.svc.cluster.local"
+                jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
 
 agent:
   enabled: true

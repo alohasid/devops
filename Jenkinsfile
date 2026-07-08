@@ -37,7 +37,6 @@ spec:
         ECR_REGISTRY   = '079715688900.dkr.ecr.us-west-2.amazonaws.com'
         ECR_REPOSITORY = 'lesson-5-ecr'
         IMAGE_TAG      = "${BUILD_NUMBER}"
-        GIT_REPO_URL   = 'https://github.com/alohasid/devops.git'
     }
 
     stages {
@@ -60,15 +59,15 @@ spec:
                 container('git-tools') {
                     withCredentials([usernamePassword(credentialsId: 'github-token', passwordVariable: 'GIT_TOKEN', usernameVariable: 'GIT_USER')]) {
                         sh """
-                        git config --global user.email "jenkins@ci-cd.local"
+                        git config --global user.email "jenkins@internal.local"
                         git config --global user.name "Jenkins Pipeline"
 
-                        sed -i 'x/tag: .*/tag: "${IMAGE_TAG}"/' charts/django-app/values.yaml
+                        sed -i "s|^\\([[:space:]]*tag:\\).*|\\1 ${IMAGE_TAG}|" charts/django-app/values.yaml
 
                         git add charts/django-app/values.yaml
                         git commit -m "Automated image tag update to ${IMAGE_TAG} [skip ci]"
 
-                        git push https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_URL} main
+                        git push https://${GIT_USER}:${GIT_TOKEN}@github.com/alohasid/devops.git HEAD:main
                         """
                     }
                 }
