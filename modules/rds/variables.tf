@@ -67,3 +67,21 @@ variable "multi_az" {
   description = "Specifies if the RDS instance or Aurora cluster is multi-AZ"
   default     = false
 }
+
+variable "allowed_cidr_blocks" {
+  type        = list(string)
+  description = "List of CIDR blocks allowed to connect to the database"
+  default     = ["10.0.0.0/16"]
+}
+
+variable "work_mem" {
+  type        = string
+  description = "The amount of memory to be used by internal sort operations and hash tables"
+  default     = "4MB"
+}
+
+variable "db_password" {
+  type        = string
+  description = "Password for the master DB user"
+  sensitive   = true
+}

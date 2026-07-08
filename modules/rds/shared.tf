@@ -16,7 +16,7 @@ resource "aws_security_group" "db" {
     from_port   = var.engine == "postgres" || var.engine == "aurora-postgresql" ? 5432 : 3306
     to_port     = var.engine == "postgres" || var.engine == "aurora-postgresql" ? 5432 : 3306
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = var.allowed_cidr_blocks
   }
 
   egress {
@@ -34,7 +34,7 @@ resource "aws_security_group" "db" {
 resource "aws_db_parameter_group" "rds" {
   count  = var.use_aurora ? 0 : 1
   name   = "${var.cluster_name}-rds-pg"
-  family = var.engine == "postgres" ? "postgres15" : "mysql8.0"
+  family = var.engine == "postgres" ? "postgres${element(split(".", var.engine_version), 0)}" : "mysql${element(split(".", var.engine_version), 0)}"
 
   parameter {
     name  = "max_connections"
@@ -45,12 +45,17 @@ resource "aws_db_parameter_group" "rds" {
     name  = var.engine == "postgres" ? "log_statement" : "general_log"
     value = var.engine == "postgres" ? "all" : "1"
   }
+
+  parameter {
+    name  = var.engine == "postgres" ? "work_mem" : "sort_buffer_size"
+    value = var.engine == "postgres" ? replace(var.work_mem, "MB", "024") : "262144"
+  }
 }
 
 resource "aws_rds_cluster_parameter_group" "aurora" {
   count  = var.use_aurora ? 1 : 0
   name   = "${var.cluster_name}-aurora-pg"
-  family = var.engine == "aurora-postgresql" ? "aurora-postgresql15" : "aurora-mysql8.0"
+  family = var.engine == "aurora-postgresql" ? "aurora-postgresql${element(split(".", var.engine_version), 0)}" : "aurora-mysql${element(split(".", var.engine_version), 0)}"
 
   parameter {
     name  = "max_connections"
@@ -60,5 +65,10 @@ resource "aws_rds_cluster_parameter_group" "aurora" {
   parameter {
     name  = var.engine == "aurora-postgresql" ? "log_statement" : "general_log"
     value = var.engine == "aurora-postgresql" ? "all" : "1"
+  }
+
+  parameter {
+    name  = var.engine == "aurora-postgresql" ? "work_mem" : "sort_buffer_size"
+    value = var.engine == "aurora-postgresql" ? replace(var.work_mem, "MB", "024") : "262144"
   }
 }
