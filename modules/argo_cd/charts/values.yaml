@@ -1,2 +1,4 @@
 repoUrl: "https://github.com/alohasid/devops.git"
-targetRevision: "main"
+targetRevision: "HEAD"
+prometheusRepoUrl: "https://prometheus-community.github.io/helm-charts"
+prometheusChartVersion: "58.2.2"
