@@ -36,10 +36,10 @@ output "jenkins_url_command" {
 }
 
 output "database_endpoint" {
-  value = module.rds.endpoint
-}
-
-output "database_endpoint" {
   value       = module.rds.endpoint
   description = "The connection endpoint for the created RDS instance or Aurora Cluster"
+}
+
+output "grafana_port_forward_command" {
+  value = "kubectl port-forward svc/kube-prometheus-stack-grafana 3000:80 -n monitoring"
 }

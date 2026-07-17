@@ -70,6 +70,11 @@ module "rds" {
   multi_az          = false
 }
 
+module "monitoring" {
+  source     = "./modules/monitoring"
+  depends_on = [module.eks]
+}
+
 module "rds" {
   source            = "./modules/rds"
   cluster_name      = "lesson-db-module"

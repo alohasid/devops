@@ -1,46 +1,71 @@
-# GitOps CI/CD Pipeline Infrastructure (Jenkins + Argo CD + Helm)
+# Cloud Infrastructure & GitOps CI/CD Pipeline
 
-This deployment architecture configures a complete, automated continuous integration and continuous delivery loop leveraging Jenkins for image artifact generation and Argo CD for declaration tracking.
+This repository contains the complete production-ready infrastructure and deployment pipeline definitions for the final automation project.
 
-## Pipeline Topologies
-- **Infrastructure Provisioning**: Orchestrated entirely via modularized Terraform bundles including full Kubernetes and Helm providers.
-- **Continuous Integration**: Triggered inside EKS isolated node steps using ephemeral Kaniko executors to eliminate Root socket exposure.
-- **Continuous Deployment**: Maintained synchronously via the Argo CD Application engine utilizing the App-of-Apps automation model.
+## Architecture & Components
+- **Infrastructure Automation**: AWS Cloud environment topology mapped natively using clean Terraform modules.
+- **Networking & Access Control**: Isolated Amazon VPC layout spanning segmented public/private subnets secured via custom IAM Profiles and targeted Security Groups.
+- **Container Orchestration**: Production-grade Amazon EKS Cluster equipped with the AWS EBS CSI Driver add-on for dynamic volume handling.
+- **Continuous Integration**: Jenkins deployment managed as code via JCasC with an isolated custom `kaniko-agent` pod template for daemonless, unprivileged container builds.
+- **Continuous Delivery**: Argo CD deployment running the declarative App-of-Apps design pattern to synchronize cluster specifications with GitHub targets.
+- **Persistence Layer**: Highly scalable Database deployment handling standard Amazon RDS single instances or multi-node Amazon Aurora structures seamlessly.
+- **Observability System**: Enterprise-grade metrics monitoring pipeline powered by a Prometheus and Grafana stack deployment.
 
-## Orchestration Runbook
+## Deployment Runbook
 
-### Infrastructure Instantiation
-Initialize backend declarations and execute operational state blueprints:
+### Environment Initialization
 ```bash
+git checkout -b final-project
 terraform init
 terraform apply
 
 ```
 
-### Administrative Context Acquisition
-
-Update local configuration targets to establish secure communication hooks with the infrastructure control plane:
+### Infrastructure Context Interception
 
 ```bash
 aws eks update-kubeconfig --region us-west-2 --name lesson-7-eks-cluster
 
 ```
 
-### Core Automation Pipelines
-
-The underlying Jenkinsfile engine manages container lifecycles safely:
-
-1. **Verification**: Builds layers via non-privileged context mapping.
-2. **Registry Distribution**: Delivers distinct immutable tags natively to Amazon ECR.
-3. **State Mutation**: Performs precise space-retaining token overrides inside `charts/django-app/values.yaml` using regex mapping components.
-4. **Synchronization**: Propagates atomic mutation updates back to GitHub securely.
-
-### Operational Observation
-
-Inspect active processing engines and application state topologies directly:
+### Component Verification Metrics
 
 ```bash
-kubectl get pods -n jenkins
-kubectl get svc -n argocd
+kubectl get all -n jenkins
+kubectl get all -n argocd
+kubectl get all -n monitoring
+
+```
+
+### Secure Ingress Tunneling & Port Forwarding
+
+* **Jenkins Access**:
+```bash
+kubectl port-forward svc/jenkins 8080:8080 -n jenkins
+
+```
+
+
+* **Argo CD Control Plane**:
+```bash
+kubectl port-forward svc/argocd-server 8081:443 -n argocd
+
+```
+
+
+* **Grafana Metrics Console**:
+```bash
+kubectl port-forward svc/kube-prometheus-stack-grafana 3000:80 -n monitoring
+
+```
+
+
+
+## Infrastructure Teardown & Lifecycle Notice
+
+To completely purge cloud assets and prevent unwanted cloud service provider billing fees, invoke the automated teardown pipeline:
+
+```bash
+terraform destroy
 
 ```
