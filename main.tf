@@ -45,11 +45,29 @@ module "eks" {
 module "jenkins" {
   source       = "./modules/jenkins"
   cluster_name = module.eks.cluster_name
+  depends_on   = [module.eks]
 }
 
 module "argo_cd" {
   source       = "./modules/argo_cd"
   git_repo_url = "https://github.com/alohasid/devops.git"
+  depends_on   = [module.eks]
+}
+
+module "rds" {
+  source            = "./modules/rds"
+  cluster_name      = "lesson-db-module"
+  vpc_id            = module.vpc.vpc_id
+  subnet_ids        = module.vpc.private_subnet_ids
+  use_aurora        = false
+  engine            = "postgres"
+  engine_version    = "15.4"
+  instance_class    = "db.t3.medium"
+  allocated_storage = 20
+  db_name           = "devops_db"
+  username          = "devops_user"
+  db_password       = var.db_password
+  multi_az          = false
 }
 
 module "rds" {

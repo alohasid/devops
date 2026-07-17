@@ -5,6 +5,6 @@ variable "argo_cd_version" {
 
 variable "git_repo_url" {
   type        = string
-  default     = "https://github.com/alohasid/devops.gitt"
-  description = "URL  Git-репозиторію з інфраструктурою та чартами"
+  default     = "https://github.com/alohasid/devops.git"
+  description = "URL вашого Git-репозиторію"
 }
