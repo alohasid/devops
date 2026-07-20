@@ -1,22 +1,39 @@
-variable "jenkins_namespace" {
-  type        = string
-  default     = "jenkins"
-  description = "Kubernetes namespace for Jenkins"
+variable "namespace" {
+  type    = string
+  default = "jenkins"
 }
 
-variable "cluster_name" {
-  type        = string
-  description = "Name of the EKS cluster"
+variable "chart_version" {
+  type    = string
+  default = "5.8.12"
 }
 
-variable "ecr_repository" {
-  type        = string
-  default     = ""
-  description = "ECR Repository URL"
+variable "aws_region" {
+  type = string
 }
 
-variable "git_repo_url" {
-  type        = string
-  default     = "https://github.com/alohasid/devops.git"
-  description = "Git Repository URL"
+variable "ecr_repository_url" {
+  type = string
+}
+
+variable "git_repository_branch" {
+  type = string
+}
+
+variable "git_repository_url" {
+  type = string
+}
+
+variable "git_token" {
+  type      = string
+  sensitive = true
+}
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
+
+variable "git_username" {
+  type = string
 }

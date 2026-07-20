@@ -1,41 +1,32 @@
 controller:
-  componentName: "jenkins-controller"
-  adminSecretKey: "jenkins-admin-password"
-  serviceType: "LoadBalancer"
+  serviceType: ClusterIP
+  admin:
+    username: admin
   installPlugins:
-    - "kubernetes:4251.v130c197fa_043"
-    - "workflow-aggregator:596.v8c21c963d92d"
-    - "git:5.2.1"
-    - "pipeline-stage-view:2.34"
-    - "configuration-as-code:1775.v810d70a_730cf"
-    - "credentials-binding:687.v619cb_15e923f"
-
+    - kubernetes:4296.v20a_7e4d77cf6
+    - workflow-aggregator:600.vb_57cdd26fdd7
+    - git:5.2.1
+    - configuration-as-code:1810.v9b_c30a_249a_4c
+    - credentials:1319.v7eb_51b_3a_c97b_
+    - job-dsl:1.87
   JCasC:
-    enabled: true
-    configScripts:
-      cloud-config: |
-        jenkins:
-          clouds:
-            - kubernetes:
-                name: "kubernetes"
-                serverUrl: "https://kubernetes.default"
-                namespace: "jenkins"
-                jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
-                jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
-                templates:
-                  - name: "kaniko-agent"
-                    label: "kaniko-git"
-                    serviceAccount: "jenkins"
-                    containers:
-                      - name: "kaniko"
-                        image: "gcr.io/kaniko-project/executor:v1.14.0-debug"
-                        command: "/busybox/cat"
-                        ttyEnabled: true
-                      - name: "git-tools"
-                        image: "alpine/git:2.43.0"
-                        command: "/bin/sh"
-                        args: "-c cat"
-                        ttyEnabled: true
-
+    defaultConfig: true
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
 agent:
-  enabled: false
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+persistence:
+  enabled: true
+  size: 8Gi

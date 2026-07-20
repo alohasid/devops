@@ -1,10 +1,6 @@
 server:
   service:
-    type: LoadBalancer
-  config:
-    resource.customizations: |
-      networking.k8s.io/Ingress:
-        health.lua: |
-          hs = {}
-          hs.status = "Healthy"
-          return hs
+    type: ClusterIP
+configs:
+  params:
+    server.insecure: true

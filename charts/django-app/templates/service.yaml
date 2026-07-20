@@ -1,12 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-service
+  name: django-app
+  labels:
+    app: django-app
 spec:
   type: {{ .Values.service.type }}
+  selector:
+    app: django-app
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
+      targetPort: 8000
       protocol: TCP
-  selector:
-    app: {{ .Release.Name }}
+      name: http

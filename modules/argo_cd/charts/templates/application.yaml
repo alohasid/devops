@@ -1,22 +1,21 @@
+{{- range .Values.applications }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: django-app
+  name: {{ .name }}
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: {{ .Values.repoUrl }}
-    targetRevision: {{ .Values.targetRevision }}
-    path: charts/django-app
+    repoURL: {{ .repoURL }}
+    targetRevision: {{ .targetRevision }}
+    path: {{ .path }}
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: {{ .namespace }}
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+---
+{{- end }}

@@ -1,5 +1,5 @@
-resource "aws_dynamodb_table" "locks" {
-  name         = var.table_name
+resource "aws_dynamodb_table" "tflock" {
+  name         = var.dynamodb_table_name
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -7,4 +7,6 @@ resource "aws_dynamodb_table" "locks" {
     name = "LockID"
     type = "S"
   }
+
+  tags = var.tags
 }

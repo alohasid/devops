@@ -1,7 +1,8 @@
-variable "ecr_name" {
+variable "project_name" {
   type = string
 }
 
-variable "scan_on_push" {
-  type = bool
+variable "tags" {
+  type    = map(string)
+  default = {}
 }

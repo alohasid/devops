@@ -1,74 +1,69 @@
-resource "aws_db_subnet_group" "main" {
-  name       = "${var.cluster_name}-subnet-group"
-  subnet_ids = var.subnet_ids
+locals {
+  name = "${var.project_name}-db"
 
-  tags = {
-    Name = "${var.cluster_name}-subnet-group"
+  is_postgres = var.use_aurora ? (var.aurora_engine == "aurora-postgresql") : (var.engine == "postgres")
+  parameter_group_family = (
+    var.use_aurora
+    ? (var.aurora_engine == "aurora-postgresql" ? "aurora-postgresql15" : "aurora-mysql8.0")
+    : (var.engine == "postgres" ? "postgres15" : "mysql8.0")
+  )
+
+  base_parameters = local.is_postgres ? {
+    max_connections = "200"
+    log_statement   = "none"
+    work_mem        = "4MB"
+    } : {
+    max_connections  = "200"
+    general_log      = "0"
+    sort_buffer_size = "262144"
   }
+
+  merged_parameters = merge(local.base_parameters, var.parameter_overrides)
+}
+
+resource "aws_db_subnet_group" "this" {
+  name       = "${local.name}-subnets"
+  subnet_ids = var.subnet_ids
+  tags       = merge(var.tags, { Name = "${local.name}-subnets" })
 }
 
 resource "aws_security_group" "db" {
-  name        = "${var.cluster_name}-db-sg"
-  description = "Security group for database access"
+  name        = "${local.name}-sg"
+  description = "DB access security group"
   vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = var.engine == "postgres" || var.engine == "aurora-postgresql" ? 5432 : 3306
-    to_port     = var.engine == "postgres" || var.engine == "aurora-postgresql" ? 5432 : 3306
-    protocol    = "tcp"
-    cidr_blocks = var.allowed_cidr_blocks
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "${var.cluster_name}-db-sg"
-  }
+  tags        = merge(var.tags, { Name = "${local.name}-sg" })
 }
 
-resource "aws_db_parameter_group" "rds" {
-  count  = var.use_aurora ? 0 : 1
-  name   = "${var.cluster_name}-rds-pg"
-  family = var.engine == "postgres" ? "postgres${element(split(".", var.engine_version), 0)}" : "mysql${element(split(".", var.engine_version), 0)}"
-
-  parameter {
-    name  = "max_connections"
-    value = "100"
-  }
-
-  parameter {
-    name  = var.engine == "postgres" ? "log_statement" : "general_log"
-    value = var.engine == "postgres" ? "all" : "1"
-  }
-
-  parameter {
-    name  = var.engine == "postgres" ? "work_mem" : "sort_buffer_size"
-    value = var.engine == "postgres" ? replace(var.work_mem, "MB", "024") : "262144"
-  }
+resource "aws_security_group_rule" "ingress" {
+  count             = length(var.allowed_cidrs) > 0 ? 1 : 0
+  type              = "ingress"
+  security_group_id = aws_security_group.db.id
+  from_port         = var.port
+  to_port           = var.port
+  protocol          = "tcp"
+  cidr_blocks       = var.allowed_cidrs
 }
 
-resource "aws_rds_cluster_parameter_group" "aurora" {
-  count  = var.use_aurora ? 1 : 0
-  name   = "${var.cluster_name}-aurora-pg"
-  family = var.engine == "aurora-postgresql" ? "aurora-postgresql${element(split(".", var.engine_version), 0)}" : "aurora-mysql${element(split(".", var.engine_version), 0)}"
+resource "aws_security_group_rule" "egress_all" {
+  type              = "egress"
+  security_group_id = aws_security_group.db.id
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
 
-  parameter {
-    name  = "max_connections"
-    value = "200"
+resource "aws_db_parameter_group" "this" {
+  name   = "${local.name}-params"
+  family = local.parameter_group_family
+
+  dynamic "parameter" {
+    for_each = local.merged_parameters
+    content {
+      name  = parameter.key
+      value = parameter.value
+    }
   }
 
-  parameter {
-    name  = var.engine == "aurora-postgresql" ? "log_statement" : "general_log"
-    value = var.engine == "aurora-postgresql" ? "all" : "1"
-  }
-
-  parameter {
-    name  = var.engine == "aurora-postgresql" ? "work_mem" : "sort_buffer_size"
-    value = var.engine == "aurora-postgresql" ? replace(var.work_mem, "MB", "024") : "262144"
-  }
+  tags = merge(var.tags, { Name = "${local.name}-params" })
 }

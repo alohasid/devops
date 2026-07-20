@@ -1,6 +1,4 @@
 apiVersion: v2
-name: argocd-apps
-description: Helm chart to deploy ArgoCD Applications and Repositories
-type: application
+name: argo-apps
 version: 0.1.0
-appVersion: "1.0.0"
+description: Helm chart to define Argo CD Applications and Repositories

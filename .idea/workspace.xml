@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1f804f05-4154-4cd3-a641-5219e839bab8" name="Changes" comment="final project">
+      <change afterPath="$PROJECT_DIR$/Django/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/Jenkinsfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/app/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/app/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/app/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/app/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/docker-compose.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Django/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend.hcl.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bootstrap/backend/main.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bootstrap/backend/variables.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/charts/django-app/templates/ingress.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/charts/django-app/templates/servicemonitor.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/argo_cd/argo_cd.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/monitoring/monitoring.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/monitoring/outputs.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/monitoring/providers.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/monitoring/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/monitoring/variables.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/providers.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/terraform.tfvars.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend.tf" beforeDir="false" afterPath="$PROJECT_DIR$/backend.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/django-app/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/django-app/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/django-app/templates/configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/django-app/templates/configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/django-app/templates/deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/django-app/templates/deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/django-app/templates/hpa.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/django-app/templates/hpa.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/django-app/templates/secret.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/django-app/templates/secret.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/django-app/templates/service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/django-app/templates/service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/django-app/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/django-app/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/charts/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/charts/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/charts/templates/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/charts/templates/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/charts/templates/prometheus-app.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/charts/templates/repository.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/charts/templates/repository.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/charts/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/charts/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/jenkins.tf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/providers.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/providers.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/argo_cd/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/argo_cd/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/ecr/ecr.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/ecr/ecr.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/ecr/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/ecr/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/ecr/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/ecr/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/eks/aws_ebs_csi_driver.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/eks/aws_ebs_csi_driver.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/eks/eks.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/eks/eks.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/eks/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/eks/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/eks/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/eks/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/jenkins/jenkins.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/jenkins/jenkins.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/jenkins/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/jenkins/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/jenkins/providers.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/jenkins/providers.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/jenkins/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/jenkins/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/jenkins/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/jenkins/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/rds/aurora.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/rds/aurora.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/rds/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/rds/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/rds/rds.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/rds/rds.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/rds/shared.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/rds/shared.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/rds/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/rds/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/s3-backend/dynamodb.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/s3-backend/dynamodb.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/s3-backend/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/s3-backend/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/s3-backend/s3.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/s3-backend/s3.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/s3-backend/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/s3-backend/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/vpc/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/vpc/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/vpc/routes.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/vpc/routes.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/vpc/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/vpc/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/vpc/vpc.tf" beforeDir="false" afterPath="$PROJECT_DIR$/modules/vpc/vpc.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/variables.tf" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="lesson-8-9" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;alohasid&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alohasid/devops.git&quot;,
+    &quot;accountId&quot;: &quot;d0fda794-4922-4b04-a500-ab1dff45d0e0&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3FAHO4S9RzusBmTbNtdD9kofkrh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;final-project&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/seraf1m/PycharmProjects/devops&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="devops" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-WS-243.21565.180" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1f804f05-4154-4cd3-a641-5219e839bab8" name="Changes" comment="" />
+      <created>1781510918845</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781510918845</updated>
+      <workItem from="1782224529041" duration="13402000" />
+      <workItem from="1783174171308" duration="1320000" />
+      <workItem from="1783506401879" duration="2244000" />
+      <workItem from="1783577739298" duration="2958000" />
+      <workItem from="1784297264349" duration="2146000" />
+      <workItem from="1784533729835" duration="2112000" />
+      <workItem from="1784536470069" duration="21877000" />
+    </task>
+    <task id="LOCAL-00001" summary="hm 3">
+      <option name="closed" value="true" />
+      <created>1781511258631</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1781511258632</updated>
+    </task>
+    <task id="LOCAL-00002" summary="hm 4">
+      <option name="closed" value="true" />
+      <created>1781512623349</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1781512623349</updated>
+    </task>
+    <task id="LOCAL-00003" summary="hm 3">
+      <option name="closed" value="true" />
+      <created>1781594847346</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1781594847346</updated>
+    </task>
+    <task id="LOCAL-00004" summary="hm 5">
+      <option name="closed" value="true" />
+      <created>1782226036382</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1782226036382</updated>
+    </task>
+    <task id="LOCAL-00005" summary="hm 5">
+      <option name="closed" value="true" />
+      <created>1782385682515</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1782385682515</updated>
+    </task>
+    <task id="LOCAL-00006" summary="hm 7">
+      <option name="closed" value="true" />
+      <created>1782902765039</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1782902765039</updated>
+    </task>
+    <task id="LOCAL-00007" summary="hm 7">
+      <option name="closed" value="true" />
+      <created>1783169450249</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1783169450250</updated>
+    </task>
+    <task id="LOCAL-00008" summary="hm 8">
+      <option name="closed" value="true" />
+      <created>1783172408571</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1783172408571</updated>
+    </task>
+    <task id="LOCAL-00009" summary="hm 8">
+      <option name="closed" value="true" />
+      <created>1783172500050</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1783172500050</updated>
+    </task>
+    <task id="LOCAL-00010" summary="hm db">
+      <option name="closed" value="true" />
+      <created>1783174397323</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1783174397323</updated>
+    </task>
+    <task id="LOCAL-00011" summary="hm 8-9">
+      <option name="closed" value="true" />
+      <created>1783507233763</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1783507233764</updated>
+    </task>
+    <task id="LOCAL-00012" summary="hm db">
+      <option name="closed" value="true" />
+      <created>1783507930052</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1783507930052</updated>
+    </task>
+    <task id="LOCAL-00013" summary="hm 8-9">
+      <option name="closed" value="true" />
+      <created>1783676552935</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1783676552935</updated>
+    </task>
+    <task id="LOCAL-00014" summary="final project">
+      <option name="closed" value="true" />
+      <created>1784298222316</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1784298222316</updated>
+    </task>
+    <task id="LOCAL-00015" summary="final project">
+      <option name="closed" value="true" />
+      <created>1784299011516</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1784299011516</updated>
+    </task>
+    <task id="LOCAL-00016" summary="final project">
+      <option name="closed" value="true" />
+      <created>1784543522581</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1784543522581</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="hm 4" />
+    <MESSAGE value="hm 3" />
+    <MESSAGE value="hm 5" />
+    <MESSAGE value="hm 7" />
+    <MESSAGE value="hm 8" />
+    <MESSAGE value="hm db" />
+    <MESSAGE value="hm 8-9" />
+    <MESSAGE value="final project" />
+    <option name="LAST_COMMIT_MESSAGE" value="final project" />
+  </component>
+</project>

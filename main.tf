@@ -1,83 +1,90 @@
-data "aws_eks_cluster" "cluster" {
-  name       = module.eks.cluster_name
-  depends_on = [module.eks]
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name       = module.eks.cluster_name
-  depends_on = [module.eks]
-}
-
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-}
-
-provider "helm" {
-  kubernetes = {
-    host                   = data.aws_eks_cluster.cluster.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-    token                  = data.aws_eks_cluster_auth.cluster.token
-  }
-}
-
-module "s3_backend" {
-  source      = "./modules/s3-backend"
-  bucket_name = "sydorenko-oleksii-terraform-bucket"
-  table_name  = "terraform-locks"
+locals {
+  common_tags = merge(var.tags, {
+    Project     = var.project_name
+    Environment = var.environment
+  })
 }
 
 module "vpc" {
-  source             = "./modules/vpc"
-  vpc_name           = "lesson-7-vpc"
-  vpc_cidr_block     = "10.0.0.0/16"
-  public_subnets     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  private_subnets    = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-  availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  source               = "./modules/vpc"
+  project_name         = var.project_name
+  vpc_cidr             = var.vpc_cidr
+  public_subnet_cidrs  = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
+  aws_region           = var.aws_region
+  tags                 = local.common_tags
 }
 
 module "ecr" {
   source       = "./modules/ecr"
-  ecr_name     = "lesson-5-ecr"
-  scan_on_push = true
+  project_name = var.project_name
+  tags         = local.common_tags
 }
 
 module "eks" {
-  source       = "./modules/eks"
-  cluster_name = "lesson-7-eks-cluster"
-  subnet_ids   = module.vpc.private_subnet_ids
-}
-
-module "jenkins" {
-  source         = "./modules/jenkins"
-  cluster_name   = module.eks.cluster_name
-  ecr_repository = module.ecr.repository_url
-  git_repo_url   = var.git_repo_url
-  depends_on     = [module.eks]
-}
-module "argo_cd" {
-  source            = "./modules/argo_cd"
-  git_repo_url      = var.git_repo_url
-  postgres_host     = module.rds.endpoint
-  db_password       = var.db_password
-  django_secret_key = var.django_secret_key
-  depends_on        = [module.eks]
+  source              = "./modules/eks"
+  project_name        = var.project_name
+  cluster_version     = var.cluster_version
+  vpc_id              = module.vpc.vpc_id
+  private_subnet_ids  = module.vpc.private_subnet_ids
+  public_subnet_ids   = module.vpc.public_subnet_ids
+  node_instance_types = var.node_instance_types
+  tags                = local.common_tags
 }
 
 module "rds" {
-  source            = "./modules/rds"
-  cluster_name      = "lesson-db-module"
-  vpc_id            = module.vpc.vpc_id
-  subnet_ids        = module.vpc.private_subnet_ids
-  use_aurora        = false
-  engine            = "postgres"
-  engine_version    = "15.4"
-  instance_class    = "db.t3.medium"
-  allocated_storage = 20
-  db_name           = "devops_db"
-  username          = "devops_user"
-  password          = var.db_password
-  db_password       = var.db_password
-  multi_az          = false
+  source         = "./modules/rds"
+  project_name   = var.project_name
+  use_aurora     = var.db_use_aurora
+  engine         = var.db_engine
+  engine_version = var.db_engine_version
+  instance_class = var.db_instance_class
+  multi_az       = var.db_multi_az
+  vpc_id         = module.vpc.vpc_id
+  subnet_ids     = module.vpc.private_subnet_ids
+  db_name        = var.db_name
+  username       = var.db_username
+  password       = var.db_password
+  allowed_cidrs  = [var.vpc_cidr]
+  tags           = local.common_tags
+}
+
+module "jenkins" {
+  source                = "./modules/jenkins"
+  namespace             = "jenkins"
+  chart_version         = "5.8.12"
+  aws_region            = var.aws_region
+  ecr_repository_url    = module.ecr.repository_url
+  git_repository_url    = var.git_repository_url
+  git_repository_branch = var.git_repository_branch
+  git_username          = var.git_username
+  git_token             = var.git_token
+  tags                  = local.common_tags
+  depends_on            = [module.eks]
+}
+
+module "argo_cd" {
+  source                = "./modules/argo_cd"
+  namespace             = "argocd"
+  chart_version         = "7.7.15"
+  charts_repo_url       = var.git_repository_url
+  charts_repo_path      = var.charts_repo_path
+  git_repository_branch = var.git_repository_branch
+  ecr_repository_url    = module.ecr.repository_url
+  image_tag             = "latest"
+  db_host               = module.rds.endpoint
+  db_port               = tostring(module.rds.port)
+  db_name               = var.db_name
+  db_user               = var.db_username
+  db_password           = var.db_password
+  tags                  = local.common_tags
+  depends_on            = [module.eks, module.rds]
+}
+
+module "monitoring" {
+  source        = "./modules/monitoring"
+  namespace     = "monitoring"
+  chart_version = "58.6.0"
+  tags          = local.common_tags
+  depends_on    = [module.eks]
 }

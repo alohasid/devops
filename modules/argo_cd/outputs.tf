@@ -1,3 +1,4 @@
-output "argocd_namespace" {
-  value = var.argo_cd_namespace
+output "initial_admin_password" {
+  value     = data.kubernetes_secret.initial.data["password"]
+  sensitive = true
 }

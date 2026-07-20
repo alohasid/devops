@@ -1,87 +1,87 @@
-variable "cluster_name" {
-  type        = string
-  description = "Name prefix for RDS resources"
-  default     = "lesson-db"
-}
-
-variable "vpc_id" {
-  type        = string
-  description = "The ID of the VPC where DB will be deployed"
-}
-
-variable "subnet_ids" {
-  type        = list(string)
-  description = "List of subnet IDs for DB subnet group"
+variable "project_name" {
+  type = string
 }
 
 variable "use_aurora" {
-  type        = bool
-  description = "If true, Aurora cluster will be created. If false, standard RDS instance will be created"
-  default     = false
+  type    = bool
+  default = false
 }
 
 variable "engine" {
-  type        = string
-  description = "Database engine type (postgres, mysql, aurora-postgresql, aurora-mysql)"
-  default     = "postgres"
+  type    = string
+  default = "mysql"
 }
 
 variable "engine_version" {
-  type        = string
-  description = "Database engine version"
-  default     = "15.4"
+  type    = string
+  default = "8.0"
 }
 
 variable "instance_class" {
-  type        = string
-  description = "Instance type for database"
-  default     = "db.t3.medium"
-}
-
-variable "allocated_storage" {
-  type        = number
-  description = "Allocated storage size in GB (ignored for Aurora)"
-  default     = 20
-}
-
-variable "db_name" {
-  type        = string
-  description = "The name of the database to create"
-  default     = "devops_db"
-}
-
-variable "username" {
-  type        = string
-  description = "Username for the master DB user"
-  default     = "devops_user"
-}
-
-variable "password" {
-  type        = string
-  description = "Password for the master DB user"
-  sensitive   = true
+  type    = string
+  default = "db.t3.micro"
 }
 
 variable "multi_az" {
-  type        = bool
-  description = "Specifies if the RDS instance or Aurora cluster is multi-AZ"
-  default     = false
+  type    = bool
+  default = false
 }
 
-variable "allowed_cidr_blocks" {
-  type        = list(string)
-  description = "List of CIDR blocks allowed to connect to the database"
-  default     = ["10.0.0.0/16"]
+variable "allocated_storage" {
+  type    = number
+  default = 20
 }
 
-variable "work_mem" {
+variable "storage_type" {
+  type    = string
+  default = "gp3"
+}
+
+variable "db_name" {
+  type    = string
+  default = "appdb"
+}
+
+variable "username" {
+  type    = string
+  default = "admin"
+}
+
+variable "password" {
+  type      = string
+  sensitive = true
+}
+
+variable "port" {
+  type    = number
+  default = 3306
+}
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "subnet_ids" {
+  type = list(string)
+}
+
+variable "allowed_cidrs" {
+  type    = list(string)
+  default = []
+}
+
+variable "parameter_overrides" {
+  type    = map(string)
+  default = {}
+}
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
+
+variable "aurora_engine" {
   type        = string
-  description = "The amount of memory to be used by internal sort operations and hash tables"
-  default     = "4MB"
-}
-
-variable "db_password" {
-  type        = string
-  description = "Password for the master DB user"
-  sensitive   = true
+  description = "aurora-mysql or aurora-postgresql (used only when use_aurora=true)"
+  default     = "aurora-mysql"
 }
