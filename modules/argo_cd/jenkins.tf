@@ -1,30 +1,36 @@
-resource "kubernetes_namespace" "argocd" {
-  metadata {
-    name = "argocd"
-  }
-}
-
-resource "helm_release" "argocd" {
-  name       = "argocd"
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd"
-  version    = var.argo_cd_version
-  namespace  = kubernetes_namespace.argocd.metadata[0].name
-
-  values = [
-    file("${path.module}/values.yaml")
-  ]
-}
-
-resource "helm_release" "argocd_apps" {
-  name      = "argocd-apps"
-  chart     = "${path.module}/charts"
-  namespace = kubernetes_namespace.argocd.metadata[0].name
+resource "helm_release" "argo_cd_apps" {
+  name       = "argo-cd-apps"
+  chart      = "${path.module}/charts"
+  namespace  = "argocd"
+  depends_on = [helm_release.argo_cd]
 
   set {
     name  = "repoUrl"
     value = var.git_repo_url
   }
 
-  depends_on = [helm_release.argocd]
+  set {
+    name  = "configMap.POSTGRES_HOST"
+    value = var.postgres_host
+  }
+
+  set {
+    name  = "secret.postgresPassword"
+    value = var.db_password
+  }
+
+  set {
+    name  = "secret.secretKey"
+    value = var.django_secret_key
+  }
+}
+
+resource "helm_release" "argo_cd" {
+  name             = "argo-cd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  version          = var.argo_cd_version
+  namespace        = var.argo_cd_namespace
+  create_namespace = true
+  values           = [file("${path.module}/values.yaml")]
 }

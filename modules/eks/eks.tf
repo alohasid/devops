@@ -92,3 +92,8 @@ resource "aws_eks_node_group" "main" {
     aws_iam_role_policy_attachment.registry,
   ]
 }
+
+resource "aws_eks_addon" "metrics_server" {
+  cluster_name = aws_eks_cluster.main.name
+  addon_name   = "metrics-server"
+}

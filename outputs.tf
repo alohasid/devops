@@ -10,11 +10,6 @@ output "private_subnet_ids" {
   value = module.vpc.private_subnet_ids
 }
 
-variable "db_password" {
-  type      = string
-  sensitive = true
-}
-
 output "ecr_repository_url" {
   value = module.ecr.repository_url
 }
@@ -36,8 +31,7 @@ output "jenkins_url_command" {
 }
 
 output "database_endpoint" {
-  value       = module.rds.endpoint
-  description = "The connection endpoint for the created RDS instance or Aurora Cluster"
+  value = module.rds.endpoint
 }
 
 output "grafana_port_forward_command" {

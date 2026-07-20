@@ -1,10 +1,11 @@
+output "jenkins_namespace" {
+  value = kubernetes_namespace_v1.jenkins.metadata[0].name
+}
+
 output "get_admin_password_command" {
-  description = "Command to retrieve the Jenkins auto-generated admin password"
-  value       = "kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo"
+  value = "kubectl get secret --namespace jenkins jenkins -o jsonpath=\"{.data.jenkins-admin-password}\" | base64 --decode"
 }
 
 output "get_url_command" {
-  description = "Command to retrieve the Jenkins LoadBalancer URL"
-  value       = "kubectl get svc --namespace jenkins jenkins -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
+  value = "kubectl port-forward svc/jenkins 8080:8080 -n jenkins"
 }
-

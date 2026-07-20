@@ -1,10 +1,21 @@
-variable "argo_cd_version" {
+variable "git_repo_url" {
   type    = string
-  default = "7.3.11"
+  default = "https://github.com/alohasid/devops.git"
 }
 
-variable "git_repo_url" {
-  type        = string
-  default     = "https://github.com/alohasid/devops.git"
-  description = "URL вашого Git-репозиторію"
+variable "postgres_host" {
+  type    = string
+  default = ""
+}
+
+variable "db_password" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
+variable "django_secret_key" {
+  type      = string
+  sensitive = true
+  default   = ""
 }
